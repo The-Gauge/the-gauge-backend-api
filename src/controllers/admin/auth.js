@@ -1,6 +1,8 @@
-const Admin= require('../../models/admin');
-const bcrypt =require('bcrypt');
-const jwt= require('jsonwebtoken');
+const Admin = require('../../models/admin');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const {check} = require('express-validator');
+
 
 // Generate Token
 const generateJwtToken = (_id, role) => {
