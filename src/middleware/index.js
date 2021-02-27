@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const env = require('dotenv');
 
 exports.requireSignin = (req,res,next)=>{
     if(req.headers.authorization){
