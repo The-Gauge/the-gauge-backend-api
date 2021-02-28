@@ -1,7 +1,6 @@
 const { signup, signin, signout }  = require('../controllers/admin/auth');
 const { validateSignupRequest, isRequestValidated, validateSigninRequest } = require('../validators/auth');
-const { createArticle , deleteArticle, getArticle} = require('../controllers/article');
-const {adminMiddleware , requireSignin} = require('../middleware/index');
+const { createArticle , deleteArticle, getArticleByAuthor,getArticle,getArticleDetailsById} = require('../controllers/article');
 const { addCategory , getCategories} = require('../controllers/category');
 // const {requireSignin} = require('../validators/auth');
 const {adminMiddleware , requireSignin} = require('../middleware/index');
@@ -26,7 +25,7 @@ const router = express.Router();
     
     router.post('/signup',validateSignupRequest,isRequestValidated, signup );
     router.post('/signin',validateSigninRequest,isRequestValidated, signin);
-    router.post('/admin/signout', signout)
+    router.post('/signout', signout)
 
     // Categories routes
     router.post('/category/create',requireSignin,adminMiddleware,addCategory);
@@ -34,7 +33,9 @@ const router = express.Router();
     
     // articles control Routes
     router.post('/article/create',requireSignin,adminMiddleware, upload.single('articlePicture'), createArticle);
-    router.get('/category/getcategory',getArticle);
+    router.get('/article/getArticleById',getArticleDetailsById);
+    router.get('/article/getarticle',getArticle);
+    router.get('/article/getarticleByAuthor',getArticleByAuthor);
     router.post('/article/create',requireSignin,adminMiddleware, deleteArticle);
 
    

@@ -6,9 +6,9 @@ const path = require('path');
 const cors = require('cors');
 
 //routes
-const categoryRoutes = require('./routes/catergory');
+const categoryRoutes = require('./routes/adminRoutes');
 const adminRoutes = require('./routes/adminRoutes')
-const articleRoutes = require('./routes/article');
+const articleRoutes = require('./routes/adminRoutes');
 
 // Configure
 env.config();
