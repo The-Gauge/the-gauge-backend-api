@@ -1,5 +1,7 @@
 const Article = require('../models/article');
 const shortid = require('shortid');
+const readingTime = require('reading-time');
+
 exports.createArticle = (req,res) => {
     const { name, author, content, category } = req.body;
     let articlePictures = [];
@@ -9,7 +11,8 @@ exports.createArticle = (req,res) => {
         return { img: file.location };
       });
     }
-  
+    const stats = readingTime(content);
+    console.log(stats);
     const article = new Article({
       name: name,
       slug: slugify(name),

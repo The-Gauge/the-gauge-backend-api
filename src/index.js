@@ -15,7 +15,9 @@ env.config();
 app.use(express.json());
 
 // database connection
-mongoose.connect(process.env.MONGODB_URI,{
+const localMongo= `mongodb://localhost/theGauge`;
+//process.env.MONGODB_URI
+mongoose.connect(localMongo,{
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true,

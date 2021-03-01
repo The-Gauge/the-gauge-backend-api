@@ -26,7 +26,9 @@ const articleSchema = new mongoose.Schema({
         required: true 
     },
     articlePictures: [
-        {img:{type: String}}
+        {img:{type: String}},
+        {imgSource: {type: String}},
+        {imgSourceLink: {type: String} }
     ],
     updatedAt: Date 
 },{timestamps:true});
