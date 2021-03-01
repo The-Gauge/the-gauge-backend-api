@@ -36,7 +36,7 @@ const router = express.Router();
     router.get('/article/getArticleById',getArticleDetailsById);
     router.get('/article/getarticle',getArticle);
     router.get('/article/getarticleByAuthor',getArticleByAuthor);
-    router.post('/article/create',requireSignin,adminMiddleware, deleteArticle);
+    router.post('/article/delete',requireSignin,adminMiddleware, deleteArticle);
 
    
 module.exports = router;
