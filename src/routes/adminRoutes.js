@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 const router = express.Router();
     
-    router.post('/signup',validateSignupRequest,isRequestValidated, signup );
+    router.post('/signup',validateSignupRequest,isRequestValidated, signup);
     router.post('/signin',validateSigninRequest,isRequestValidated, signin);
     router.post('/signout', signout)
 
@@ -32,7 +32,7 @@ const router = express.Router();
     router.get('/category/getcategory',getCategories);
     
     // articles control Routes
-    router.post('/article/create',requireSignin,adminMiddleware, upload.single('articlePicture'), createArticle);
+    router.post('/article/create',requireSignin,adminMiddleware, upload.single('articlePictures'), createArticle);
     router.get('/article/getArticleById',getArticleDetailsById);
     router.get('/article/getarticle',getArticle);
     router.get('/article/getarticleByAuthor',getArticleByAuthor);
