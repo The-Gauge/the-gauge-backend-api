@@ -6,7 +6,7 @@ function createCategories(categories,parentId = null){
     const categoryList = [];
     if(parentId == null)
     {
-        category =  catergories.filter(cat => cat.parentId == underfined);
+        category =  categories.filter(cat => cat.parentId == null);
     }else{
         category = categories.filter(cat => cat.parentId == parentId);
 
@@ -44,9 +44,9 @@ exports.addCategory = (req,res)=>{
 }
 exports.getCategories = (req,res) =>{
     Category.find({})
-    .exec((error,catergories)=>{
+    .exec((error, categories)=>{
         if(error) return res.status(400).json({error});
-        if(catergories){
+        if(categories){
             const categoryList = createCategories(categories);
             res.status(200).json({ categoryList });
         }

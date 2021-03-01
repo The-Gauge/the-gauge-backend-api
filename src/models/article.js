@@ -12,13 +12,13 @@ const articleSchema = new mongoose.Schema({
         unique: true, trim: true  
     },
     author: { 
-        
         name:{type:String, 
-        required:true, trim: true },
+            required:true, trim: true,unique: false },
         email:{
             type:String, 
-            required:true, trim: true
-        }
+            required:true, trim: true, unique: false
+        },
+        unique: false
     },
     content: { 
         type: String, 
@@ -30,16 +30,23 @@ const articleSchema = new mongoose.Schema({
         required: true 
     },
     articlePictures: [
-        {img:{type: String}}
+        {
+            img: { type: String },
+            imgSource: { type: String },
+            imgSourceLink: { type: String }
+        }
     ],
     minutesRead : {
-        type: Number, required: 'true'
+        text: {type: String},
+        minutes: {type: Number},
+        time: {type: Number},
+        words: {type: Number}
+        // required: 'true'
     },
     shortText : {
         type: String, trim: 'true'
     },
     updatedAt: Date ,
-    shortText : { type: String, required: true, trim: true }
 },{timestamps:true});
 
 module.exports = mongoose.model('Article', articleSchema);

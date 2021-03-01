@@ -1,25 +1,38 @@
 const Article = require('../models/article');
 const shortid = require('shortid');
-exports.createArticle = (req,res) => {
-    const { name, author, content, category } = req.body;
+const readingTime = require('reading-time');
+
+exports.createArticle = async (req,res) => {
+    const { name, authorName, authorEmail, content, category, imgSource, imgLink } = req.body;
     let articlePictures = [];
-  
+    
     if (req.files.length > 0) {
       articlePictures = req.files.map((file) => {
-        return { img: file.location };
+        
+        return { 
+          img: `/public/${file.filename}`,
+          imgSource: imgSource,
+          imgSourceLink: imgLink
+        };
+        
       });
     }
-  
+    const author = {
+      name: authorName,
+      email: authorEmail
+    }
+    const stats = readingTime(content);
     const article = new Article({
       name: name,
-      slug: slugify(name),
+      slug: name,
       content,
       articlePictures,
       category,
-      author: req.user._id,
+      author: author,
+      minutesRead : stats
     });
   
-    article.save((error, article) => {
+    await article.save((error, article) => {
       if (error) return res.status(400).json({ error });
       if (article) {
         res.status(201).json({ article, files: req.files });
@@ -42,11 +55,43 @@ exports.createArticle = (req,res) => {
     }
   };
   
-  exports.getArticle = async (req, res) => {
+  exports.getArticleDetailsById = (req, res) => {
+    const { articleId } = req.params;
+    if (articleId) {
+      Article.findOne({ _id: articleId }).exec((error, article) => {
+        if (error) return res.status(400).json({ error });
+        if (article) {
+          res.status(200).json({ article });
+        }
+      });
+    } else {
+      return res.status(400).json({ error: "Params required" });
+    }
+  };
+
+  exports.getArticleByAuthor = async (req, res) => {
     const article = await Article.find({ author: req.user._id })
       .select("_id name author slug content articlePictures category")
       .populate({ path: "category", select: "_id name" })
       .exec();
   
     res.status(200).json({ article});
+  };
+
+  exports.getArticle = async (req, res) => {
+    var article;
+    if(req.query.search){
+      console.log(req.query.search)
+       article = await Article.find({ name: {$regex: req.query.search, $options: 'i'}})
+      .select("_id name author slug content articlePictures")
+      .populate("category", "_id name")
+      .populate("author", "_id firstName lastName")
+    }
+    else {article = await Article.find({})
+      .select("_id name author slug content articlePictures")
+      .populate("category", "_id name")
+      .populate("author", "_id firstName lastName")
+      .exec();
+    }
+    res.status(200).json({ article });
   }
