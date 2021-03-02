@@ -9,16 +9,20 @@ const articleSchema = new mongoose.Schema({
     slug: { 
         type:String, 
         required:true, 
-        unique: true 
+        unique: true, trim: true  
     },
     author: { 
-        type:String, 
-        required:true, 
-        unique: true 
+        name:{type:String, 
+            required:true, trim: true,unique: false },
+        email:{
+            type:String, 
+            required:true, trim: true, unique: false
+        },
+        unique: false
     },
     content: { 
         type: String, 
-        required: true 
+        required: true , trim: true 
     },
     category: { 
         type: mongoose.Schema.Types.ObjectId,  
@@ -26,9 +30,23 @@ const articleSchema = new mongoose.Schema({
         required: true 
     },
     articlePictures: [
-        {img:{type: String}}
+        {
+            img: { type: String },
+            imgSource: { type: String },
+            imgSourceLink: { type: String }
+        }
     ],
-    updatedAt: Date 
+    minutesRead : {
+        text: {type: String},
+        minutes: {type: Number},
+        time: {type: Number},
+        words: {type: Number}
+        // required: 'true'
+    },
+    shortText : {
+        type: String, trim: 'true'
+    },
+    updatedAt: Date ,
 },{timestamps:true});
 
 module.exports = mongoose.model('Article', articleSchema);

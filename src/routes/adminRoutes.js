@@ -2,7 +2,7 @@ const { signup, signin, signout }  = require('../controllers/admin/auth');
 const { validateSignupRequest, isRequestValidated, validateSigninRequest } = require('../validators/auth');
 const { createArticle , deleteArticle, getArticleByAuthor,getArticle,getArticleDetailsById} = require('../controllers/article');
 const { addCategory , getCategories} = require('../controllers/category');
-// const {requireSignin} = require('../validators/auth');
+//const {requireSignin} = require('../validators/auth');
 const {adminMiddleware , requireSignin} = require('../middleware/index');
 const express = require('express');
 const multer = require('multer');
@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
       cb(null, path.join(path.dirname(__dirname), 'uploads'))
     },
     filename: function (req, file, cb) {
-      cb(null, nanoid() + '-' + file.originalname)
+      cb(null, nanoid(8) + '-' + file.originalname)
     }
 });
 
@@ -32,7 +32,7 @@ const router = express.Router();
     router.get('/category/getcategory',getCategories);
     
     // articles control Routes
-    router.post('/article/create',requireSignin,adminMiddleware, upload.single('articlePictures'), createArticle);
+    router.post('/article/create',requireSignin,adminMiddleware, upload.array('articlePictures'), createArticle);
     router.get('/article/getArticleById',getArticleDetailsById);
     router.get('/article/getarticle',getArticle);
     router.get('/article/getarticleByAuthor',getArticleByAuthor);
