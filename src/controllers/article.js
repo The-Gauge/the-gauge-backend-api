@@ -1,4 +1,5 @@
 const Article = require('../models/article');
+const Category = require('../models/categories');
 const shortid = require('shortid');
 const readingTime = require('reading-time');
 
@@ -94,4 +95,18 @@ exports.createArticle = async (req,res) => {
       .exec();
     }
     res.status(200).json({ article });
-  }
+  };
+
+  exports.getArticleByCategory = async (res,req) => {
+    const { categoryId } = req.params;
+    if (categoryId) {
+      Article.find({category: categoryId }).exec((error, article) => {
+        if (error) return res.status(400).json({ error });
+        if (article) {
+          res.status(200).json({ article });
+        }
+      });
+    } else {
+      return res.status(400).json({ error: "Params required" });
+    } 
+  };
