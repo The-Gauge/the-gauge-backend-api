@@ -46,6 +46,7 @@ const articleSchema = new mongoose.Schema({
     shortText : {
         type: String, trim: 'true'
     },
+    impressions : {type: Number},
     updatedAt: Date ,
 },{timestamps:true});
 
