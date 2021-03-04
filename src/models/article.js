@@ -32,6 +32,7 @@ const articleSchema = new mongoose.Schema({
     articlePictures: [
         {
             img: { type: String },
+            imgLink: {type: String},
             imgSource: { type: String },
             imgSourceLink: { type: String }
         }
@@ -46,7 +47,7 @@ const articleSchema = new mongoose.Schema({
     shortText : {
         type: String, trim: 'true'
     },
-    impressions : {type: Number},
+    impressions : {type: Number, default: 0},
     updatedAt: Date ,
 },{timestamps:true});
 
