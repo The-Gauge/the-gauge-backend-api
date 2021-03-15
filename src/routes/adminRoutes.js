@@ -1,6 +1,6 @@
 const { signup, signin, signout }  = require('../controllers/admin/auth');
 const { validateSignupRequest, isRequestValidated, validateSigninRequest } = require('../validators/auth');
-const { createArticle , deleteArticle, getArticleByAuthor,getArticle,getArticleDetailsById, getArticleByCategory, temp} = require('../controllers/article');
+const { createArticle , deleteArticle, getArticleByAuthor,getArticle,getArticleDetailsById, getArticleByCategory, temp, getSideGridArticles} = require('../controllers/article');
 
 
 const { addCategory , getCategories} = require('../controllers/category');
@@ -35,12 +35,13 @@ const router = express.Router();
     
     // articles control Routes
     router.post('/article/create',requireSignin,adminMiddleware, upload.array('articlePictures'), createArticle);
-
     router.get('/article/:id',getArticleDetailsById);
     router.get('/article',getArticle);
-    //router.get('/article/getarticleByAuthor',getArticleByAuthor);
 
-    router.get('/article/getarticleByAuthor',getArticleByAuthor);
+    router.get('/articles/sideGrid',getSideGridArticles);
+    
+
+    //router.get('/article/getarticleByAuthor',getArticleByAuthor);
 
     router.post('/article/delete',requireSignin,adminMiddleware, deleteArticle);
     router.get('/article/category/:id', getArticleByCategory);

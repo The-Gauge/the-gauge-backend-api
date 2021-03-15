@@ -153,6 +153,38 @@ exports.createArticle = async (req,res) => {
     } 
   };
 
+  exports.getSideGridArticles = async (req,res) => {
+    let articles = await Article.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          //category: { $first: "$category" },
+          name: { $first: "$name" },
+          id: { $first: "$_id" },
+          minutesRead: { $first: "$minutesRead" },
+          shortText: { $first: "$shortText" },
+        },
+      },
+      {
+        $sort: { minutesRead: 1 },
+      },
+      {
+        $lookup: {
+          from: Category.collection.name,
+          localField: "_id",
+          foreignField: "_id",
+          as: "categoryDetails",
+        },
+      },
+    ]);
+
+   //articles = await Article.distinct("category")
+   //console.log(articles)
+  //  for await (const doc of articles)
+  //     console.log(doc); 
+    return res.status(200).json(articles)
+
+  }
   exports.temp = async (req,res) => {
     const { id } = req.params;
     if (id) {
@@ -164,19 +196,4 @@ exports.createArticle = async (req,res) => {
     } else {
       return res.status(400).json({ error: "Params required" });
     } 
-
-  exports.getArticleByDistinctCat = async (res,req) => {
-    db.Article.aggregate(
-      [
-        // { $sort: { item: 1, date: 1 } },
-        {
-          $group:
-            {
-              _id: "$name",
-              category_id: { $first: "$category" }
-            }
-        }
-      ]
-   )
-
-  };
+  }
