@@ -164,4 +164,19 @@ exports.createArticle = async (req,res) => {
     } else {
       return res.status(400).json({ error: "Params required" });
     } 
+
+  exports.getArticleByDistinctCat = async (res,req) => {
+    db.Article.aggregate(
+      [
+        // { $sort: { item: 1, date: 1 } },
+        {
+          $group:
+            {
+              _id: "$name",
+              category_id: { $first: "$category" }
+            }
+        }
+      ]
+   )
+
   };
