@@ -105,10 +105,18 @@ exports.createArticle = async (req,res) => {
         if (error) return res.status(400).json({ error });
         if (article) {
           res.status(200).json({ article });
+          let newImpressions = article.impressions;
+          newImpressions++;
+          Article.findByIdAndUpdate(id, {impressions: newImpressions}, function (err, res){
+            if(err){
+              console.log(err)
+            }
+  
+          });
         }
       });
     } else {
-      return res.status(400).json({ error: "Params required" });
+      res.status(400).json({ error: "Params required" });
     }
   };
 
