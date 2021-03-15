@@ -39,7 +39,6 @@ const router = express.Router();
     router.get('/article',getArticle);
 
     router.get('/articles/sideGrid',getSideGridArticles);
-
     
 
     //router.get('/article/getarticleByAuthor',getArticleByAuthor);
