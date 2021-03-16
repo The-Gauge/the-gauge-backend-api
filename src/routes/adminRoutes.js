@@ -1,6 +1,6 @@
 const { signup, signin, signout }  = require('../controllers/admin/auth');
 const { validateSignupRequest, isRequestValidated, validateSigninRequest } = require('../validators/auth');
-const { createArticle , deleteArticle, getArticleByAuthor,getArticle,getArticleDetailsById, getArticleByCategory, temp, getSideGridArticles} = require('../controllers/article');
+const { createArticle , deleteArticle, getArticleByAuthor,getArticle,getArticleDetailsById, getArticleByCategory, temp, getSideGridArticles, getBannerArticles} = require('../controllers/article');
 
 
 const { addCategory , getCategories} = require('../controllers/category');
@@ -40,6 +40,8 @@ const router = express.Router();
 
     router.get('/articles/sideGrid',getSideGridArticles);
     
+    router.get('/articles/banner',getBannerArticles);
+
 
     //router.get('/article/getarticleByAuthor',getArticleByAuthor);
 
