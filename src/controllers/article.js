@@ -1,6 +1,7 @@
 const Article = require('../models/article');
 const Category = require('../models/categories');
 const shortid = require('shortid');
+const homepage = require('../models/homePage');
 const readingTime = require('reading-time');
 const fs =  require('fs');
 //const path = require('path');
@@ -205,3 +206,20 @@ exports.createArticle = async (req,res) => {
       return res.status(400).json({ error: "Params required" });
     } 
   }
+
+exports.getBannerArticles = async (req,res) => {
+    const results = await Article
+    .find({})
+    .sort({
+      impressions: -1,
+    })
+    .limit(4)
+    if(results) {
+      res.status(200).json({ results });
+    }
+    else
+    {
+      return res.status(400).json({ error: "error occurred" });
+    }          
+    // console.log('RESULTS:', results);  
+}
