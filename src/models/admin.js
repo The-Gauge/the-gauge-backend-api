@@ -30,17 +30,12 @@ const adminSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: [ "admin", "super-admin"],
+      enum: [ "admin"],
       default: "admin",
     },
   },
   { timestamps: true }
 );
-
-// userSchema.virtual('password')
-// .set(function(password){
-//     this.hash_password = bcrypt.hashSync(password, 10);
-// });
 
 adminSchema.virtual("fullName").get(function () {
   return `${this.firstName} ${this.lastName}`;
