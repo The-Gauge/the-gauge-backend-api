@@ -16,8 +16,8 @@ app.use(express.json());
 
 // database connection
 const localMongo= `mongodb://localhost/theGauge`;
-//process.env.MONGODB_URI
-mongoose.connect(localMongo,{
+const deployed = process.env.MONGODB_URI
+mongoose.connect(deployed,{
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true,
@@ -29,6 +29,9 @@ mongoose.connect(localMongo,{
 app.use(cors());  
 app.use(express.json());
 app.use("/public", express.static(path.join(__dirname, "uploads")));
+app.get('/', (req, res) => {
+    res.send('The Server is working awesome, Welcome to The Gauge');
+});
 app.use('/api',adminRoutes);
 // app.use('/api',categoryRoutes);
 // app.use('/api',articleRoutes);
