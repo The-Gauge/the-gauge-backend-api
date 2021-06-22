@@ -172,6 +172,7 @@ exports.createArticle = async (req,res) => {
           id: { $first: "$_id" },
           minutesRead: { $first: "$minutesRead" },
           shortText: { $first: "$shortText" },
+          articlePictures: { $first: "$articlePictures" },
         },
       },
       {
