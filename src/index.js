@@ -16,8 +16,9 @@ app.use(express.json());
 
 // database connection
 const localMongo= `mongodb://localhost/theGauge`;
+const cloudDb = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.6yyqf.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`;
 const deployed = process.env.MONGODB_URI
-mongoose.connect(deployed,{
+mongoose.connect(cloudDb,{
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true,
