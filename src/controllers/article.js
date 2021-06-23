@@ -135,12 +135,12 @@ exports.createArticle = async (req,res) => {
     if(req.query.search){
       console.log(req.query.search)
        article = await Article.find({ name: {$regex: req.query.search, $options: 'i'}})
-      .select("_id name articlePictures minutesRead shortText")
+      .select("_id name articlePictures minutesRead shortText author")
       .populate("category", "_id name")
       // .populate("author", "_id firstName lastName")
     }
     else {article = await Article.find({})
-      .select("_id name articlePictures minutesRead shortText")
+      .select("_id name articlePictures minutesRead shortText author")
       .populate("category", "_id name")
       // .populate("author", "_id firstName lastName")
       .exec();
