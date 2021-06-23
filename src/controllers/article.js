@@ -27,7 +27,7 @@ function truncate(usertext) {
         temText += usertext[i];
       }
     }
-    temText += "\b...";
+    temText += " ...";
     usertext = temText;
   }
   return usertext;
@@ -135,12 +135,12 @@ exports.createArticle = async (req,res) => {
     if(req.query.search){
       console.log(req.query.search)
        article = await Article.find({ name: {$regex: req.query.search, $options: 'i'}})
-      .select("_id name author slug content articlePictures")
+      .select("_id name articlePictures minutesRead shortText")
       .populate("category", "_id name")
       // .populate("author", "_id firstName lastName")
     }
     else {article = await Article.find({})
-      .select("_id name author slug content articlePictures")
+      .select("_id name articlePictures minutesRead shortText")
       .populate("category", "_id name")
       // .populate("author", "_id firstName lastName")
       .exec();
